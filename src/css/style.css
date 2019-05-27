@@ -491,6 +491,10 @@ textarea:focus {
   color: #454545;
 }
 
+.glazing_block.active {
+  color: red;
+}
+
 /*test*/
 /*.tabs li {
 	display: inline-block;

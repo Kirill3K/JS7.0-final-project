@@ -5,13 +5,15 @@ window.addEventListener('DOMContentLoaded', function() {
       form = require('./parts/form.js'),
       modal = require('./parts/modal.js'),
       img = require('./parts/img.js'),
-      tabs = require('./parts/tabs.js'),
+      glazingTabs = require('./parts/glazing-tabs.js'),
+      decorTabs = require('./parts/decor-tabs.js'),
       timer = require('./parts/timer.js');
   
   calc();
   form();
   modal();
   img();
-  tabs();
+  glazingTabs();
+  decorTabs();
   timer();
 });

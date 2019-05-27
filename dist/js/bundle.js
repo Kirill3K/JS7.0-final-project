@@ -100,6 +100,35 @@ module.exports = calc;
 
 /***/ }),
 
+/***/ "./src/js/parts/decor-tabs.js":
+/*!************************************!*\
+  !*** ./src/js/parts/decor-tabs.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function decorTabs() {
+    let tab = document.querySelectorAll('.decoration_item'),
+        tabContent = document.querySelectorAll('.decoration_slider__content'),
+        link = document.querySelectorAll('div.decoration_item > div');
+        
+
+        for (let i = 0; i < tab.length; i++){
+            tab[i].addEventListener('click', function(){
+                for (let u = 0; u < tab.length; u++){
+                link[u].classList.remove('after_click');
+                tabContent[u].style.display = 'none';
+        }
+
+            link[i].classList.add('after_click');
+            tabContent[i].style.display = 'flex';
+            });
+        }
+}
+module.exports = decorTabs;
+
+/***/ }),
+
 /***/ "./src/js/parts/form.js":
 /*!******************************!*\
   !*** ./src/js/parts/form.js ***!
@@ -111,6 +140,36 @@ function form() {
 
 }
 module.exports = form;
+
+/***/ }),
+
+/***/ "./src/js/parts/glazing-tabs.js":
+/*!**************************************!*\
+  !*** ./src/js/parts/glazing-tabs.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function glazingTabs() {
+    let tab = document.querySelectorAll('.glazing_block'),
+        info = document.querySelector('.glazing_slider'),        
+        tabContent = document.querySelectorAll('.glazing_slider__content'),
+        link = info.getElementsByTagName('a');
+
+        for (let i = 0; i < tab.length; i++){
+            tab[i].addEventListener('click', function(){
+                for (let u = 0; u < tab.length; u++){
+                link[u].classList.remove('active');
+                tabContent[u].style.display = 'none';
+        }
+
+            link[i].classList.add('active');
+            tabContent[i].style.display = 'flex';
+            });
+        }
+}
+
+module.exports = glazingTabs;
 
 /***/ }),
 
@@ -139,20 +198,6 @@ function modal() {
 
 }
 module.exports = modal;
-
-/***/ }),
-
-/***/ "./src/js/parts/tabs.js":
-/*!******************************!*\
-  !*** ./src/js/parts/tabs.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function tabs() {
-
-}
-module.exports = tabs;
 
 /***/ }),
 
@@ -243,14 +288,16 @@ window.addEventListener('DOMContentLoaded', function() {
       form = __webpack_require__(/*! ./parts/form.js */ "./src/js/parts/form.js"),
       modal = __webpack_require__(/*! ./parts/modal.js */ "./src/js/parts/modal.js"),
       img = __webpack_require__(/*! ./parts/img.js */ "./src/js/parts/img.js"),
-      tabs = __webpack_require__(/*! ./parts/tabs.js */ "./src/js/parts/tabs.js"),
+      glazingTabs = __webpack_require__(/*! ./parts/glazing-tabs.js */ "./src/js/parts/glazing-tabs.js"),
+      decorTabs = __webpack_require__(/*! ./parts/decor-tabs.js */ "./src/js/parts/decor-tabs.js"),
       timer = __webpack_require__(/*! ./parts/timer.js */ "./src/js/parts/timer.js");
   
   calc();
   form();
   modal();
   img();
-  tabs();
+  glazingTabs();
+  decorTabs();
   timer();
 });
 
