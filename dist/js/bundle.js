@@ -137,8 +137,87 @@ module.exports = decorTabs;
 /***/ (function(module, exports) {
 
 function form() {
+	let validTel = document.querySelectorAll('input[name="user_phone"]');
 
+	validTel.forEach(function (item) {
+		item.oninput = function () {
+			item.value = item.value.replace(/[^\d]/g, '');
+		}
+	});
+
+	let message = {
+		loading: 'Идет отправка',
+		success: 'Отправлено',
+		failure: 'Ошибка'
+	};
+
+	let form = document.querySelector('.main_form'),
+		input = form.getElementsByTagName('input'),
+		contactForm = document.querySelector('.form'),
+		contactInput = contactForm.getElementsByTagName('input'),
+		statusMessage = document.createElement('div');
+
+	statusMessage.classList.add('status');
+
+	// Модальное окно
+
+	let sendForm = (form, input) => {
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			form.appendChild(statusMessage);
+			let formData = new FormData(form);
+
+			let postData = (data) => {
+
+				return new Promise(function (resolve, reject) {
+					let request = new XMLHttpRequest();
+
+					request.open('POST', 'server.php');
+
+					request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+					let obj = {};
+					formData.forEach((value, key) => {
+						obj[key] = value;
+					});
+
+					let data = JSON.stringify(obj);
+
+					request.onreadystatechange = function () {
+						if (request.readyState < 4) {
+							resolve()
+						} else if (request.readyState === 4 && request.status == 200) {
+							resolve()
+						} else {
+							reject()
+						}
+					}
+
+					request.send(data);
+				})
+
+			} // Конец postData
+
+			let clearInput = () => {
+				for (let i = 0; i < input.length; i++) {
+					input[i].value = '';
+				}
+			}
+
+			postData(formData)
+				.then(() => statusMessage.innerHTML = message.loading)
+				.then(() => {
+					statusMessage.innerHTML = message.success;
+				})
+				.catch(() => statusMessage.innerHTML = message.failure)
+				.then(clearInput)
+		});
+	}
+
+	sendForm(form, input);
+	sendForm(contactForm, contactInput);
 }
+
 module.exports = form;
 
 /***/ }),
@@ -187,17 +266,96 @@ module.exports = img;
 
 /***/ }),
 
-/***/ "./src/js/parts/modal.js":
+/***/ "./src/js/parts/popup.js":
 /*!*******************************!*\
-  !*** ./src/js/parts/modal.js ***!
+  !*** ./src/js/parts/popup.js ***!
   \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function modal() {
+function popup() {
+    let call = document.querySelectorAll('.phone_link'),
+        popup = document.querySelector('.popup'),
+        close = document.querySelector('.popup_close');
+    
+    call.forEach(function(item) {
+        item.addEventListener('click', () => {
+            event.preventDefault();
+            popup.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    close.addEventListener('click', () => {
+        popup.style.display = 'none';
+        document.body.style.overflow = '';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target == popup) {
+            popup.style.display = 'none';
+            document.body.style.overflow = '';            
+        }
+    });
+}
+module.exports = popup;
+
+/***/ }),
+
+/***/ "./src/js/parts/popupEngineer.js":
+/*!***************************************!*\
+  !*** ./src/js/parts/popupEngineer.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function popupEngineer() {
+    let call = document.querySelector('.popup_engineer_btn'),
+        popup = document.querySelector('.popup_engineer'),
+        close = document.querySelectorAll('.popup_close');
+    
+    call.addEventListener('click', () => {
+        popup.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    });
+    
+
+    close.forEach(function(item) {
+        item.addEventListener('click', () => {
+            popup.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target == popup) {
+            popup.style.display = 'none';
+            document.body.style.overflow = '';            
+        }
+    });
+}
+module.exports = popupEngineer;
+
+/***/ }),
+
+/***/ "./src/js/parts/popupInterval.js":
+/*!***************************************!*\
+  !*** ./src/js/parts/popupInterval.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function popupInterval() {
+    let popup = document.querySelector('.popup');
+
+    let popupInterval = () => {
+        popup.style.display = 'block';
+    }
+
+    setTimeout (popupInterval, 60000);
 
 }
-module.exports = modal;
+module.exports = popupInterval;
 
 /***/ }),
 
@@ -286,7 +444,9 @@ window.addEventListener('DOMContentLoaded', function() {
   'use strict';
   let calc = __webpack_require__(/*! ./parts/calc.js */ "./src/js/parts/calc.js"),
       form = __webpack_require__(/*! ./parts/form.js */ "./src/js/parts/form.js"),
-      modal = __webpack_require__(/*! ./parts/modal.js */ "./src/js/parts/modal.js"),
+      popup = __webpack_require__(/*! ./parts/popup.js */ "./src/js/parts/popup.js"),
+      popupEngineer = __webpack_require__(/*! ./parts/popupEngineer.js */ "./src/js/parts/popupEngineer.js"),
+      popupInterval = __webpack_require__(/*! ./parts/popupInterval.js */ "./src/js/parts/popupInterval.js"),
       img = __webpack_require__(/*! ./parts/img.js */ "./src/js/parts/img.js"),
       glazingTabs = __webpack_require__(/*! ./parts/glazing-tabs.js */ "./src/js/parts/glazing-tabs.js"),
       decorTabs = __webpack_require__(/*! ./parts/decor-tabs.js */ "./src/js/parts/decor-tabs.js"),
@@ -294,7 +454,9 @@ window.addEventListener('DOMContentLoaded', function() {
   
   calc();
   form();
-  modal();
+  popup();
+  popupEngineer();
+  popupInterval();
   img();
   glazingTabs();
   decorTabs();
