@@ -6,9 +6,8 @@ function form() {
 		failure: 'Ошибка'
 	};
 
-	let form = document.querySelector('.main_form'),
-		input = document.getElementsByTagName('input'),
-		contactForm = document.querySelectorAll('.second_form'),
+	let input = document.getElementsByTagName('input'),
+		contactForm = document.querySelectorAll('.second_form, .main_form'),
 		statusMessage = document.createElement('div');
 
 	statusMessage.classList.add('status');
