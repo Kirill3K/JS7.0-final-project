@@ -382,7 +382,6 @@ function form() {
 		});
 	}
 
-	sendForm(form, input);
 	sendForm(contactForm, input);
 
 	let validTel = document.querySelectorAll('input[name="user_phone"]');
