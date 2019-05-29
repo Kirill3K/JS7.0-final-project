@@ -185,6 +185,10 @@ textarea:focus {
   /*border: 1px solid red;*/
 }
 
+/* .work_img__big {
+  display: none;
+} */
+
 .header .logo {
   height: 10rem;
   display: table;
@@ -494,6 +498,8 @@ textarea:focus {
 .glazing_block.active {
   color: red;
 }
+
+
 
 /*test*/
 /*.tabs li {
